@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+.venv/
+
+# Next.js build output
+frontend/.next/
+frontend/out/
+
+# Environment variables (NEVER push these!)
+backend/.env
+frontend/.env
+frontend/.env.local
+frontend/.env.production
+
+# Build logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Misc
+*.tmp
+.cache/
