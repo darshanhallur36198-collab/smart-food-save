@@ -1,3 +1,4 @@
+"use client";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -17,6 +18,7 @@ const createIcon = (color) => new L.Icon({
 const redIcon = createIcon('red');
 const greenIcon = createIcon('green');
 const blueIcon = createIcon('blue');
+const violetIcon = createIcon('violet');
 
 export default function LiveMap({ lat, lng, markers = [], popupText="Selected Location" }) {
   // If no markers array provided, use the single lat/lng
@@ -43,7 +45,7 @@ export default function LiveMap({ lat, lng, markers = [], popupText="Selected Lo
           <Marker 
             key={i} 
             position={[m.lat, m.lng]} 
-            icon={m.type === 'waste' ? redIcon : (m.type === 'donation' ? greenIcon : blueIcon)}
+            icon={m.type === 'waste' ? redIcon : m.type === 'donation' ? greenIcon : m.type === 'ngo' ? violetIcon : blueIcon}
           >
             <Popup>
               <div className="p-1">

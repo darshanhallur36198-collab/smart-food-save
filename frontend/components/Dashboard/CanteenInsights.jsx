@@ -3,7 +3,7 @@ import { DollarSign, TrendingUp, Trophy, ChefHat, Users, ListChecks } from "luci
 import { motion } from "framer-motion";
 
 export default function CanteenInsights({ stats = {} }) {
-  const savings = (stats.totalWaste * 0.12).toFixed(2); // Mock savings calculation
+  const savings = (stats.totalWaste * 10).toFixed(2); // ₹ savings (approx ₹10/kg waste reduced)
   const totalBookings = 142; // Mock bookings
 
   const leaderboard = [
@@ -50,7 +50,7 @@ export default function CanteenInsights({ stats = {} }) {
           </div>
           <div className="flex flex-col h-full justify-between">
             <div>
-              <p className="text-4xl font-black mb-1">${savings || "4.50"}</p>
+              <p className="text-4xl font-black mb-1">₹{savings || "37.50"}</p>
               <p className="text-sm font-bold text-emerald-100 uppercase tracking-widest leading-tight">Est. Monthly Savings <br/> from Waste Reduction</p>
             </div>
             <div className="mt-4 pt-4 border-t border-white/10 flex justify-between items-center">

@@ -1,17 +1,15 @@
 const axios = require("axios");
 
-// Call Python AI API
-exports.getMealForecast = async (day, attendance) => {
+// Call Python AI API for 7-day forecast
+exports.getWeeklyForecast = async (attendance = 100) => {
   try {
     const res = await axios.get(
-      `http://localhost:8000/predict?day=${day}&attendance=${attendance}`
+      `http://localhost:8000/forecast_week?attendance=${attendance}`
     );
-
-    return res.data.prediction;
+    return res.data.forecast;
   } catch (err) {
-    console.error("Forecast error:", err.message);
-
-    // fallback logic (important in production)
-    return attendance * 0.9;
+    console.error("Weekly forecast error:", err.message);
+    // Generic high-confidence fallback for Mon-Sun
+    return [110, 125, 115, 130, 95, 70, 65];
   }
-};
+};

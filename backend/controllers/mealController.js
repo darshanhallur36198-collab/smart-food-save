@@ -24,13 +24,14 @@ exports.registerMeal = async (req, res) => {
 
 exports.getForecast = async (req, res) => {
   try {
-    const { day = 1, attendance = 100 } = req.query;
-    const prediction = await getMealForecast(day, attendance);
-    res.json({ prediction });
+    const { attendance = 100 } = req.query;
+    const forecast = await getWeeklyForecast(attendance);
+    res.json({ forecast });
   } catch (err) {
     res.status(500).json({ message: "Failed to load forecast" });
   }
 };
+
 
 exports.createMeal = async (req, res) => {
   try {
