@@ -22,3 +22,22 @@ services:
     rootDir: ai-service
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn api:app --host 0.0.0.0 --port $PORT
+
+  # Frontend Next.js Service
+  - type: web
+    name: smart-food-frontend
+    env: node
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: smart-food-backend
+          envVarKey: RENDER_EXTERNAL_URL
+      - key: NEXT_PUBLIC_SOCKET_URL
+        fromService:
+          type: web
+          name: smart-food-backend
+          envVarKey: RENDER_EXTERNAL_URL
