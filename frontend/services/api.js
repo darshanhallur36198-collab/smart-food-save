@@ -1,20 +1,17 @@
 import axios from "axios";
 
-// 1. Get the base URL from environment or default
-const rawBaseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+// 1. Get and clean the base URL from environment (prevents duplication like /api/api)
+const rawBaseUrl = (process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api").replace(/\/+$/, "");
+const baseURL = rawBaseUrl.endsWith("/api") ? rawBaseUrl : `${rawBaseUrl}/api`;
 
-// 2. Ensure it has the /api suffix (Required for Render)
-const baseURL = (rawBaseUrl.endsWith("/api") || rawBaseUrl.includes("localhost")) 
-  ? rawBaseUrl 
-  : `${rawBaseUrl.replace(/\/$/, "")}/api`;
-
-// 3. Create the Axios instance with a single baseURL
+// 2. Create the Axios instance with the verified single baseURL
 const API = axios.create({
   baseURL,
   headers: {
     "Content-Type": "application/json",
   },
 });
+
 
 API.interceptors.request.use((req) => {
   if (typeof window !== "undefined") {
