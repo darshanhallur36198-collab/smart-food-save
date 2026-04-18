@@ -15,20 +15,23 @@ initSocket(server);
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGO_URI)
-.then(() => console.log("✅ MongoDB Atlas Connected via .env Successfully"))
-.catch(err => console.error("❌ MongoDB Connection Error:", err));
+// 1. Check for MONGO_URI and provide helpful logs for Render
+if (!process.env.MONGO_URI) {
+  console.warn("⚠️  WARNING: MONGO_URI is not defined in environment variables!");
+  console.warn("If this is Render, please add MONGO_URI in the Dashboard -> Environment section.");
+}
 
-// Basic Health Check Route (Returns plain text for Render health checks)
-app.get("/", (req, res) => {
+// 2. Connect to MongoDB (non-blocking)
+mongoose.connect(process.env.MONGO_URI || "")
+.then(() => console.log("✅ MongoDB Atlas Connected Successfully"))
+.catch(err => console.error("❌ MongoDB Connection Error:", err.message));
+
+// 3. Super-Resilient Health Check Route
+// This matches "/" and also the common typo path involving the success message string
+app.get(["/", "/\"Smart Food Save API is running successfully! \""], (req, res) => {
   res.status(200).send("Smart Food Save API is running successfully! ");
 });
 
-// Fallback health check route in case Render configuration has a typo in the path
-app.get("/\"Smart Food Save API is running successfully! \"", (req, res) => {
-  res.status(200).send("Smart Food Save API is running successfully! ");
-});
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
