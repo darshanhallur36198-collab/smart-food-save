@@ -7,6 +7,7 @@ import socket from "@/services/socket";
 import API from "@/services/api";
 import { useToast } from "@/components/ToastProvider";
 import CanteenInsights from "@/components/Dashboard/CanteenInsights";
+import LogisticsOverview from "@/components/Dashboard/LogisticsOverview";
 
 export default function Dashboard() {
   const [stats, setStats] = useState({ totalWaste: 0, totalLogs: 0, users: 0 });
@@ -79,11 +80,11 @@ export default function Dashboard() {
             </div>
             
             <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-sm">
-               <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-4">System Logistics Overview</h3>
-               <p className="text-sm text-slate-500 mb-6">Automated monitoring of waste reduction targets and inventory procurement needs.</p>
-               <div className="h-48 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-700 flex items-center justify-center italic text-slate-400">
-                  Detailed Logistics Visualization coming in v2
+               <div className="mb-6">
+                <h3 className="text-xl font-bold text-slate-800 dark:text-white">Daily Logistics & Supply Chain</h3>
+                <p className="text-sm text-slate-500 mt-1">Real-time status of inventory reserves and automated donation fulfillment pipelines.</p>
                </div>
+               <LogisticsOverview />
             </div>
           </div>
 
