@@ -17,12 +17,11 @@ export default function Dashboard() {
   useEffect(() => {
     const handleAlert = (msg) => {
       console.log("Socket Alert:", msg);
-      toast(msg, "error"); // Pop a red toast for alerts
+      toast(msg, "error");
     };
     
     socket.on("alert", handleAlert);
 
-    // Fetch live summary stats
     Promise.all([
       API.get("/waste").catch(() => ({ data: [] })),
     ]).then(([wasteRes]) => {
@@ -57,7 +56,7 @@ export default function Dashboard() {
         {/* Stats Cards */}
         <div className="grid grid-cols-2 xl:grid-cols-4 gap-4 mb-10">
           {statCards.map((card) => (
-            <div key={card.label} className={`bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4`}>
+            <div key={card.label} className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 p-5 flex items-center gap-4">
               <div className={`${card.bg} border ${card.border} rounded-xl p-3 text-2xl`}>{card.icon}</div>
               <div>
                 <p className="text-xs text-slate-400 dark:text-slate-500 font-bold tracking-wider uppercase mb-1">{card.label}</p>
