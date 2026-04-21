@@ -1,5 +1,5 @@
 const Meal = require("../models/Meal");
-const { getMealForecast } = require("../services/forecastService");
+const { getWeeklyForecast } = require("../services/forecastService");
 
 exports.registerMeal = async (req, res) => {
   try {
