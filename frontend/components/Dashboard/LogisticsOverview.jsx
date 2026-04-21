@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import API from "@/services/api";
-import { Package, Handshake, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { Package, Handshake, AlertCircle, CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function LogisticsOverview() {
@@ -46,7 +46,7 @@ export default function LogisticsOverview() {
           </div>
           {lowStock.length > 0 && (
             <span className="flex items-center gap-1 text-[10px] bg-rose-500/10 text-rose-500 px-2 py-0.5 rounded-full font-bold uppercase tracking-wider animate-pulse">
-              <AlertTriangle size={10} /> {lowStock.length} Alerts
+            <AlertCircle size={10} /> {lowStock.length} Alerts
             </span>
           )}
         </div>
@@ -93,7 +93,7 @@ export default function LogisticsOverview() {
           {data.donations.slice(0, 3).map((donation, idx) => (
             <div key={idx} className="flex items-start gap-3">
               <div className={`mt-1 p-1 rounded-lg ${donation.status === 'Pending' ? 'bg-amber-100 text-amber-600' : 'bg-emerald-100 text-emerald-600'}`}>
-                {donation.status === 'Pending' ? <AlertTriangle size={12} /> : <CheckCircle2 size={12} />}
+                {donation.status === 'Pending' ? <AlertCircle size={12} /> : <CheckCircle size={12} />}
               </div>
               <div className="flex-1">
                 <div className="flex justify-between items-center">
