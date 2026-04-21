@@ -7,6 +7,7 @@ import {
 } from "chart.js";
 import API from "@/services/api";
 import Skeleton from "@/components/Skeleton";
+import MapWrapper from "@/components/Map/MapWrapper";
 
 ChartJS.register(ArcElement, Tooltip, Legend, BarElement, CategoryScale, LinearScale);
 
@@ -95,6 +96,25 @@ export default function WasteAnalytics() {
         <div className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
           <h3 className="font-bold text-slate-700 dark:text-slate-200 mb-4">Last 7 Days</h3>
           <Bar data={barData} options={{ responsive: true, plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true } } }} />
+        </div>
+
+        {/* Geographic Distribution */}
+        <div className="md:col-span-2 bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-6 shadow-sm">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-slate-700 dark:text-slate-200">Waste Hotspot Map</h3>
+            <span className="text-[10px] font-black uppercase text-rose-500 bg-rose-50 px-2 py-0.5 rounded-full">Live Logs</span>
+          </div>
+          <div className="h-[300px] w-full rounded-xl overflow-hidden border border-slate-100 dark:border-slate-700">
+             <MapWrapper 
+                markers={logs.filter(w => w.coordinates?.lat).map(w => ({
+                  lat: w.coordinates.lat,
+                  lng: w.coordinates.lng,
+                  type: 'waste',
+                  popupText: `${w.weight}kg ${w.type}`
+                }))} 
+             />
+          </div>
+          <p className="text-[10px] text-slate-400 mt-2 italic">* Visualizing geographic distribution of recent waste geotags.</p>
         </div>
       </div>
     </div>

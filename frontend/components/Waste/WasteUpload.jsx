@@ -16,7 +16,7 @@ export default function WasteUpload() {
   const [logs, setLogs] = useState([]);
   const [fetchingLogs, setFetchingLogs] = useState(true);
   const [page, setPage] = useState(1);
-  const [useLocation, setUseLocation] = useState(false);
+  const [useLocation, setUseLocation] = useState(true);
   const [coordinates, setCoordinates] = useState(null);
   const [expandedMap, setExpandedMap] = useState(null);
   const [photoPreview, setPhotoPreview] = useState(null);
@@ -30,7 +30,16 @@ export default function WasteUpload() {
       .finally(() => setFetchingLogs(false));
   };
 
-  useEffect(() => { fetchLogs(); }, []);
+  useEffect(() => { 
+    fetchLogs(); 
+    // Proactively capture location if enabled
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        pos => { setCoordinates({ lat: pos.coords.latitude, lng: pos.coords.longitude }); },
+        () => { setUseLocation(false); }
+      );
+    }
+  }, []);
 
   const submitWaste = async (e) => {
     e.preventDefault();
