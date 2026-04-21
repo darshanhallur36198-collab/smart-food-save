@@ -17,14 +17,19 @@ app.use(express.json());
 
 // 1. Check for MONGO_URI and provide helpful logs for Render
 if (!process.env.MONGO_URI) {
-  console.warn("  WARNING: MONGO_URI is not defined in environment variables!");
-  console.warn("If this is Render, please add MONGO_URI in the Dashboard -> Environment section.");
+  console.error("  ❌ FATAL ERROR: MONGO_URI is not defined!");
+  console.error("  Please add MONGO_URI in the Render Dashboard -> Environment section.");
+  process.exit(1);
 }
 
-// 2. Connect to MongoDB (non-blocking)
-mongoose.connect(process.env.MONGO_URI || "")
-  .then(() => console.log(" MongoDB Atlas Connected Successfully"))
-  .catch(err => console.error(" MongoDB Connection Error:", err.message));
+// 2. Connect to MongoDB
+mongoose.connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB Atlas Connected Successfully"))
+  .catch(err => {
+    console.error("❌ MongoDB Connection Error:", err.message);
+    process.exit(1);
+  });
+
 
 // 3. Super-Resilient Health Check Route
 app.get("/", (req, res) => {
